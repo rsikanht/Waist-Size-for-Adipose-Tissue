@@ -1,0 +1,41 @@
+setwd("C:/Users/Srikanth B V/Desktop/Data Science Assignments/Data Sets")
+wcat <- read.csv("wc-at.csv")
+View(wcat)
+# x = Waist
+# y = AT
+library(psych)
+describe(wcat)
+
+# EDA - Exploratory Data Analysis.
+par(mfrow = c(2,2))
+hist(wcat$Waist)
+boxplot(wcat$Waist, horizontal = T)
+hist(wcat$AT)
+boxplot(wcat$AT, horizontal = T)
+
+# Scatter Plot
+plot(wcat$Waist, wcat$AT)
+# Graph shows moderate positive correlation between both the variables
+
+cor(wcat$Waist, wcat$AT)
+# Correlation value is 0.82 which shows strong correlation between the variables
+
+# Regression check
+reg_model <- lm(wcat$AT~wcat$Waist)
+summary(reg_model)
+# R^2 value is 0.67 which is a moderate fit model.
+#We can write eq. as AT=-215.98+3.45*Waist
+
+# Confidence interval for 95%
+confint(reg_model, level = 0.95)
+
+# List down the predicted values along with lsl and usl
+predict(reg_model, interval = "predict")
+
+# Calculation on Y = B0 + B1*x for prediction check
+-215.98+3.45*74.75
+-215.98+3.45*72.60
+
+# From the provided data set, the correlation value is 0.82 where both variables are strong and positively correlated.
+# Co-ef. are significant and co-ef.of Determination value. i.e R^2 is 0.67 which is good.
+# Hence model is best fit and waist size is an appropriate input to determine adipose tissue.
